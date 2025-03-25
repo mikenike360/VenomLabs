@@ -1,5 +1,6 @@
 "use client";
 import Spline from "@splinetool/react-spline";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -11,22 +12,16 @@ export default function Home() {
           className="absolute inset-0 z-0"
         />
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-white text-center">
-          {/* <h1 className="text-5xl md:text-6xl font-bold drop-shadow-lg">
-            VenomLabs
-          </h1>
-          <p className="text-xl md:text-2xl mt-4 drop-shadow">
-            Web3 + Next.js + 3D = 💀🔥
-          </p> */}
-          {/* <button
-            className="btn btn-primary mt-6"
+          <button
+            className="btn btn-primary mt-64"
             onClick={() =>
               document.getElementById("portfolio")?.scrollIntoView({
                 behavior: "smooth",
               })
             }
           >
-            View My Work
-          </button> */}
+            Enter Site
+          </button>
         </div>
       </section>
 
@@ -39,11 +34,12 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Project Card 1 */}
             <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow">
-              <figure>
-                <img
+              <figure className="relative w-full h-48">
+                <Image
                   src="/project1.png"
                   alt="Project One"
-                  className="object-cover w-full h-48"
+                  layout="fill"
+                  objectFit="cover"
                 />
               </figure>
               <div className="card-body">
@@ -66,11 +62,12 @@ export default function Home() {
             </div>
             {/* Project Card 2 */}
             <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow">
-              <figure>
-                <img
+              <figure className="relative w-full h-48">
+                <Image
                   src="/project2.png"
                   alt="Project Two"
-                  className="object-cover w-full h-48"
+                  layout="fill"
+                  objectFit="cover"
                 />
               </figure>
               <div className="card-body">
@@ -93,11 +90,12 @@ export default function Home() {
             </div>
             {/* Project Card 3 */}
             <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow">
-              <figure>
-                <img
+              <figure className="relative w-full h-48">
+                <Image
                   src="/project3.png"
                   alt="Project Three"
-                  className="object-cover w-full h-48"
+                  layout="fill"
+                  objectFit="cover"
                 />
               </figure>
               <div className="card-body">
@@ -126,23 +124,29 @@ export default function Home() {
       <section id="about" className="py-20">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-8 md:mb-0">
-            <img
-              src="/about-image.jpg"
-              alt="About me"
-              className="rounded-lg shadow-lg"
-            />
+            <div className="relative w-full h-80">
+              <Image
+                src="/about-image.jpg"
+                alt="About me"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-lg shadow-lg"
+              />
+            </div>
           </div>
           <div className="md:w-1/2 md:pl-12">
             <h2 className="text-4xl font-bold mb-4">About Me</h2>
             <p className="mb-4">
-              I'm a passionate web developer who creates modern, interactive,
-              and visually stunning web applications. My work blends creative
-              design with the latest technology to deliver impactful digital
-              experiences.
+              I&apos;m a passionate web developer with a strong background in
+              cybersecurity, creating modern, interactive, and visually stunning
+              web applications. I blend innovative design, Web3 integrations, and
+              security-first development to deliver digital experiences that are
+              both beautiful and robust.
             </p>
             <p>
-              From immersive 3D experiences to innovative web3 solutions, I bring
-              a unique perspective to every project.
+              From immersive 3D experiences to bulletproof web3 solutions, my work
+              ensures that design meets defense—because every line of code should
+              be as secure as it is sleek.
             </p>
           </div>
         </div>
