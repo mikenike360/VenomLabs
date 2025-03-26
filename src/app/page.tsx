@@ -70,7 +70,8 @@ export default function Home() {
                 />
               </figure>
               <div className="card-body text-primary">
-                <h3 className="card-title">Miller's Hill Farm</h3>
+
+                <h3 className="card-title">Miller&apos;s Hill Farm</h3>
                 <p>
                   A modern venue website built with React and Tailwind CSS. Includes a completely custom reservation and image gallery system with a backend DataBase built with SupaBase
                 </p>
@@ -134,14 +135,14 @@ export default function Home() {
           <div className="md:w-1/2 md:pl-12">
             <h2 className="text-4xl font-bold mb-4">About VenomLabs</h2>
             <p className="mb-4">
-            At VenomLabs, we engineer digital solutions with precision and bite. We're a forward-thinking
+            At VenomLabs, we engineer digital solutions with precision and bite. We&apos;re a forward-thinking
             development studio specializing in crafting high-performance software, scalable infrastructure, and
             cutting-edge Web3 applications. Our mission is to simplify complex problems through elegant code,
             innovative design, and bulletproof security.
             </p>
             <p>
-            We don’t just build — we experiment, iterate, and push the limits of what's possible. Whether it's
-            decentralized apps, backend systems, or full-stack platforms, VenomLabs delivers code that's clean,
+            We don’t just build — we experiment, iterate, and push the limits of what&apos;s possible. Whether it&apos;s
+            decentralized apps, backend systems, or full-stack platforms, VenomLabs delivers code that&apos;s clean,
             efficient, and venomously effective.
             </p>
           </div>
