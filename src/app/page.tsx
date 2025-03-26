@@ -28,8 +28,8 @@ export default function Home() {
       {/* Portfolio Section */}
       <section id="portfolio" className="py-20 bg-base-200">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            My Portfolio
+          <h2 className="text-4xl font-bold text-center text-primary mb-12">
+            Recent Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Project Card 1 */}
@@ -42,15 +42,14 @@ export default function Home() {
                   objectFit="cover"
                 />
               </figure>
-              <div className="card-body">
-                <h3 className="card-title">Project One</h3>
+              <div className="card-body text-primary">
+                <h3 className="card-title">zKontract</h3>
                 <p>
-                  A modern web app using React, Next.js, and stunning 3D
-                  interactions.
+                  A decentralized bounty board, built on the Aleo blockchain. Currently live on the Aleo Mainnet!
                 </p>
                 <div className="card-actions justify-end">
                   <a
-                    href="https://example.com/project1"
+                    href="https://zkontract.app"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-outline btn-sm"
@@ -70,15 +69,14 @@ export default function Home() {
                   objectFit="cover"
                 />
               </figure>
-              <div className="card-body">
-                <h3 className="card-title">Project Two</h3>
+              <div className="card-body text-primary">
+                <h3 className="card-title">Miller's Hill Farm</h3>
                 <p>
-                  An innovative web3 solution showcasing smart contract
-                  integrations.
+                  A modern venue website built with React and Tailwind CSS. Includes a completely custom reservation and image gallery system with a backend DataBase built with SupaBase
                 </p>
                 <div className="card-actions justify-end">
                   <a
-                    href="https://example.com/project2"
+                    href="https://millers-farm-react-website.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-outline btn-sm"
@@ -98,15 +96,14 @@ export default function Home() {
                   objectFit="cover"
                 />
               </figure>
-              <div className="card-body">
-                <h3 className="card-title">Project Three</h3>
+              <div className="card-body text-primary">
+                <h3 className="card-title ">zKoi</h3>
                 <p>
-                  A creative portfolio piece combining 3D animation and modern
-                  UI design.
+                  An NFT framework built on the Aleo blockchain. Coming soon!
                 </p>
                 <div className="card-actions justify-end">
                   <a
-                    href="https://example.com/project3"
+                    href="https://zkoi.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-outline btn-sm"
@@ -126,38 +123,37 @@ export default function Home() {
           <div className="md:w-1/2 mb-8 md:mb-0">
             <div className="relative w-full h-80">
               <Image
-                src="/about-image.jpg"
-                alt="About me"
+                src="/labs.png"
+                alt="About VenomLabs"
                 layout="fill"
-                objectFit="cover"
+                objectFit="scale-down"
                 className="rounded-lg shadow-lg"
               />
             </div>
           </div>
           <div className="md:w-1/2 md:pl-12">
-            <h2 className="text-4xl font-bold mb-4">About Me</h2>
+            <h2 className="text-4xl font-bold mb-4">About VenomLabs</h2>
             <p className="mb-4">
-              I&apos;m a passionate web developer with a strong background in
-              cybersecurity, creating modern, interactive, and visually stunning
-              web applications. I blend innovative design, Web3 integrations, and
-              security-first development to deliver digital experiences that are
-              both beautiful and robust.
+            At VenomLabs, we engineer digital solutions with precision and bite. We're a forward-thinking
+            development studio specializing in crafting high-performance software, scalable infrastructure, and
+            cutting-edge Web3 applications. Our mission is to simplify complex problems through elegant code,
+            innovative design, and bulletproof security.
             </p>
             <p>
-              From immersive 3D experiences to bulletproof web3 solutions, my work
-              ensures that design meets defense—because every line of code should
-              be as secure as it is sleek.
+            We don’t just build — we experiment, iterate, and push the limits of what's possible. Whether it's
+            decentralized apps, backend systems, or full-stack platforms, VenomLabs delivers code that's clean,
+            efficient, and venomously effective.
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-base-200">
+      <section id="contact" className="py-20 bg-base-200 text-primary">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8">Get in Touch</h2>
           <form
-            action="https://formspree.io/f/your-form-id"
+            action="https://formspree.io/f/mgvazgke"
             method="POST"
             className="max-w-lg mx-auto"
           >
@@ -199,30 +195,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <p>&copy; {new Date().getFullYear()} VenomLabs. All rights reserved.</p>
           <div className="mt-4 space-x-4">
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://twitter.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              Twitter
-            </a>
+
           </div>
         </div>
       </footer>
