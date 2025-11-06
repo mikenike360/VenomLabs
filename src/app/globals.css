@@ -86,22 +86,22 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - theme aware */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: hsl(var(--b2));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #9333ea, #ec4899);
+  background: hsl(var(--p));
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #7e22ce, #db2777);
+  background: hsl(var(--pf));
 }
 
 /* Line clamp utility */
@@ -207,16 +207,10 @@ html {
   }
 }
 
-/* Dark mode support */
-.dark {
-  color-scheme: dark;
-  background: #111827;
-  color: #f3f4f6;
-}
-
+/* Body uses DaisyUI theme colors */
 body {
-  background: inherit;
-  color: inherit;
+  background-color: hsl(var(--b1));
+  color: hsl(var(--bc));
 }
 
 /* Hide default cursor on desktop when custom cursor is active */

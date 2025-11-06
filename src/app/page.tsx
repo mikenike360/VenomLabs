@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [typedText, setTypedText] = useState("");
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -42,14 +42,11 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Dark mode
+  // Initialize theme from localStorage
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
+    const savedTheme = localStorage.getItem("theme") || "luxury";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
 
   // Custom cursor
   useEffect(() => {
@@ -80,7 +77,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="scroll-smooth bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="scroll-smooth bg-base-100 transition-colors duration-300">
       {/* Custom Cursor */}
       <div
         ref={cursorRef}
@@ -99,9 +96,9 @@ export default function Home() {
       />
 
       {/* Scroll Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800 z-[60]">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-base-200 z-[60]">
         <div
-          className="h-full bg-gradient-to-r from-purple-600 to-pink-600 transition-all duration-150"
+          className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -110,14 +107,12 @@ export default function Home() {
       <nav
         className={`fixed top-1 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? darkMode 
-              ? "bg-gray-900/90 backdrop-blur-md shadow-lg" 
-              : "bg-white/90 backdrop-blur-md shadow-lg"
+            ? "bg-base-100/90 backdrop-blur-md shadow-lg"
             : "bg-transparent"
         }`}
       >
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             VenomLabs
           </div>
           
@@ -131,36 +126,18 @@ export default function Home() {
                     .getElementById(item.toLowerCase())
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className={`transition-colors hover:text-purple-600 font-medium ${
+                className={`transition-colors hover:text-primary font-medium ${
                   scrolled 
-                    ? darkMode ? "text-gray-200" : "text-gray-800" 
-                    : "text-white"
+                    ? "text-base-content" 
+                    : "text-base-100"
                 }`}
               >
                 {item}
               </button>
             ))}
             
-            {/* Dark Mode Toggle */}
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2 rounded-full transition-all hover:bg-purple-500/20 ${
-                scrolled 
-                  ? darkMode ? "text-gray-200" : "text-gray-800"
-                  : "text-white"
-              }`}
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                </svg>
-              )}
-            </button>
+            {/* Theme Switcher */}
+            <ThemeSwitcher />
           </div>
 
           {/* Mobile Menu Button */}
@@ -173,17 +150,17 @@ export default function Home() {
               <span
                 className={`block h-0.5 w-6 bg-current transition-all duration-300 ${
                   mobileMenuOpen ? "rotate-45 translate-y-2" : ""
-                } ${scrolled ? "text-gray-800" : "text-white"}`}
+                } ${scrolled ? "text-base-content" : "text-base-100"}`}
               />
               <span
                 className={`block h-0.5 w-6 bg-current transition-all duration-300 ${
                   mobileMenuOpen ? "opacity-0" : "opacity-100"
-                } ${scrolled ? "text-gray-800" : "text-white"}`}
+                } ${scrolled ? "text-base-content" : "text-base-100"}`}
               />
               <span
                 className={`block h-0.5 w-6 bg-current transition-all duration-300 ${
                   mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                } ${scrolled ? "text-gray-800" : "text-white"}`}
+                } ${scrolled ? "text-base-content" : "text-base-100"}`}
               />
             </div>
           </button>
@@ -192,7 +169,7 @@ export default function Home() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 ${darkMode ? 'bg-gray-900' : 'bg-white'} z-40 md:hidden transition-all duration-300 ${
+        className={`fixed inset-0 bg-base-100 z-40 md:hidden transition-all duration-300 ${
           mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
@@ -206,27 +183,19 @@ export default function Home() {
                   ?.scrollIntoView({ behavior: "smooth" });
                 setMobileMenuOpen(false);
               }}
-              className={`text-3xl font-bold ${darkMode ? 'text-gray-200' : 'text-gray-800'} hover:text-purple-600 transition-colors`}
+              className="text-3xl font-bold text-base-content hover:text-primary transition-colors"
             >
               {item}
             </button>
           ))}
-          <button
-            onClick={() => {
-              setDarkMode(!darkMode);
-              setMobileMenuOpen(false);
-            }}
-            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full"
-          >
-            {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
-          </button>
+          <ThemeSwitcher />
         </div>
       </div>
 
       {/* Hero Section */}
-      <section id="hero" className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 dark:from-black dark:via-purple-950 dark:to-black">
+      <section id="hero" className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-primary/80 via-secondary/60 to-primary/80">
         {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-pink-600/30 animate-gradient"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 animate-gradient"></div>
         
         {/* Particles Background */}
         <div className="particles-container absolute inset-0 z-[1]">
@@ -245,22 +214,22 @@ export default function Home() {
 
         {/* Geometric shapes for visual interest */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-secondary rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
         </div>
         
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-white text-center px-4">
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-base-100 text-center px-4">
           <div className="space-y-6 animate-fadeIn">
-            <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent animate-gradient">
+            <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient">
               VenomLabs
             </h1>
-            <p className="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto flex items-center justify-center">
+            <p className="text-xl md:text-2xl text-base-100/90 max-w-2xl mx-auto flex items-center justify-center">
               {typedText}
               <span className="animate-pulse ml-1">|</span>
             </p>
             <button
-              className="mt-8 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-semibold text-lg shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transition-all duration-300"
+              className="btn btn-primary mt-8 rounded-full text-lg shadow-2xl hover:scale-105 transition-all duration-300"
               onClick={() =>
                 document.getElementById("portfolio")?.scrollIntoView({
                   behavior: "smooth",
@@ -274,20 +243,20 @@ export default function Home() {
       </section>
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <section id="portfolio" className="py-24 bg-gradient-to-b from-base-200 to-base-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 scroll-animate opacity-0">
-            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
               Recent Projects
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
               Cutting-edge solutions built with modern technology
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Project Card 1 */}
-            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div className="group relative bg-base-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-base-200">
                 <Image
                   src="/project1.png"
                   alt="Project One"
@@ -295,22 +264,22 @@ export default function Home() {
                   objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </figure>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">zKontract</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                <h3 className="text-2xl font-bold text-base-content mb-3">zKontract</h3>
+                <p className="text-base-content/70 mb-4 line-clamp-3">
                   A decentralized bounty board, built on the Aleo blockchain. Currently live on the Aleo Mainnet!
                 </p>
                 <div className="flex gap-2 flex-wrap mb-4">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Blockchain</span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">Web3</span>
+                  <span className="badge badge-primary">Blockchain</span>
+                  <span className="badge badge-secondary">Web3</span>
                 </div>
                 <a
                   href="https://zkontract.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                  className="btn btn-primary btn-sm rounded-full"
                 >
                   View Project
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -321,8 +290,8 @@ export default function Home() {
             </div>
             
             {/* Project Card 2 */}
-            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div className="group relative bg-base-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-base-200">
                 <Image
                   src="/project2.png"
                   alt="Project Two"
@@ -330,22 +299,22 @@ export default function Home() {
                   objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </figure>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">Miller&apos;s Hill Farm</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                <h3 className="text-2xl font-bold text-base-content mb-3">Miller&apos;s Hill Farm</h3>
+                <p className="text-base-content/70 mb-4 line-clamp-3">
                   A modern venue website built with React and Tailwind CSS. Includes a completely custom reservation and image gallery system with a backend DataBase built with SupaBase
                 </p>
                 <div className="flex gap-2 flex-wrap mb-4">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">React</span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">SupaBase</span>
+                  <span className="badge badge-primary">React</span>
+                  <span className="badge badge-secondary">SupaBase</span>
                 </div>
                 <a
                   href="https://millers-farm-react-website.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                  className="btn btn-primary btn-sm rounded-full"
                 >
                   View Project
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -356,8 +325,8 @@ export default function Home() {
             </div>
             
             {/* Project Card 3 */}
-            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div className="group relative bg-base-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-base-200">
                 <Image
                   src="/project3.png"
                   alt="ZK Escrow"
@@ -365,22 +334,22 @@ export default function Home() {
                   objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </figure>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">ZK Escrow</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                <h3 className="text-2xl font-bold text-base-content mb-3">ZK Escrow</h3>
+                <p className="text-base-content/70 mb-4 line-clamp-3">
                   A trustless escrow service on Aleo using zero-knowledge proofs. Securely hold funds between parties with no intermediaries required.
                 </p>
                 <div className="flex gap-2 flex-wrap mb-4">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Escrow</span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">Aleo</span>
+                  <span className="badge badge-primary">Escrow</span>
+                  <span className="badge badge-secondary">Aleo</span>
                 </div>
                 <a
                   href="https://www.zkescrow.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                  className="btn btn-primary btn-sm rounded-full"
                 >
                   View Project
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -391,8 +360,8 @@ export default function Home() {
             </div>
             
             {/* Project Card 4 */}
-            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div className="group relative bg-base-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-base-200">
                 <Image
                   src="/project4.png"
                   alt="WhisperWaffle"
@@ -400,22 +369,22 @@ export default function Home() {
                   objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </figure>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">WhisperWaffle</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                <h3 className="text-2xl font-bold text-base-content mb-3">WhisperWaffle</h3>
+                <p className="text-base-content/70 mb-4 line-clamp-3">
                   A decentralized exchange (DEX) built on the Aleo blockchain, enabling secure and private token swaps with zero-knowledge proofs.
                 </p>
                 <div className="flex gap-2 flex-wrap mb-4">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">DEX</span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">Aleo</span>
+                  <span className="badge badge-primary">DEX</span>
+                  <span className="badge badge-secondary">Aleo</span>
                 </div>
                 <a
                   href="https://whisper-waffle.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                  className="btn btn-primary btn-sm rounded-full"
                 >
                   View Project
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -426,8 +395,8 @@ export default function Home() {
             </div>
             
             {/* Project Card 5 */}
-            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div className="group relative bg-base-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-base-200">
                 <Image
                   src="/project5.png"
                   alt="Aleo Quest"
@@ -435,22 +404,22 @@ export default function Home() {
                   objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </figure>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">Aleo Quest</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                <h3 className="text-2xl font-bold text-base-content mb-3">Aleo Quest</h3>
+                <p className="text-base-content/70 mb-4 line-clamp-3">
                   An interactive education platform to learn about zero-knowledge concepts. Features an interactive terminal quest for hands-on learning.
                 </p>
                 <div className="flex gap-2 flex-wrap mb-4">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Education</span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">ZK</span>
+                  <span className="badge badge-primary">Education</span>
+                  <span className="badge badge-secondary">ZK</span>
                 </div>
                 <a
                   href="https://aleo-quest.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                  className="btn btn-primary btn-sm rounded-full"
                 >
                   View Project
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -461,8 +430,8 @@ export default function Home() {
             </div>
             
             {/* Project Card 6 */}
-            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div className="group relative bg-base-100 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-base-200">
                 <Image
                   src="/project6.png"
                   alt="Whatcom Shine Co"
@@ -470,18 +439,18 @@ export default function Home() {
                   objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </figure>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">Whatcom Shine Co</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                <h3 className="text-2xl font-bold text-base-content mb-3">Whatcom Shine Co</h3>
+                <p className="text-base-content/70 mb-4 line-clamp-3">
                   A website for a company providing residential and commercial cleaning services in Whatcom County and surrounding areas.
                 </p>
                 <div className="flex gap-2 flex-wrap mb-4">
-                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Web Design</span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">In Development</span>
+                  <span className="badge badge-primary">Web Design</span>
+                  <span className="badge badge-secondary">In Development</span>
                 </div>
-                <div className="inline-flex items-center gap-2 px-6 py-2 bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full cursor-not-allowed">
+                <div className="btn btn-disabled btn-sm rounded-full">
                   In Development
                 </div>
               </div>
@@ -491,13 +460,13 @@ export default function Home() {
       </section>
 
       {/* Technologies Section */}
-      <section className="py-24 bg-white dark:bg-gray-900">
+      <section className="py-24 bg-base-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 scroll-animate opacity-0">
-            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
               Tech Stack
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
               Building with cutting-edge technologies
             </p>
           </div>
@@ -516,7 +485,7 @@ export default function Home() {
             ].map((tech) => (
               <div
                 key={tech}
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-300"
+                className="badge badge-primary badge-lg px-6 py-3 hover:scale-105 transition-all duration-300"
               >
                 {tech}
               </div>
@@ -526,13 +495,13 @@ export default function Home() {
       </section>
 
       {/* Expertise Section */}
-      <section className="py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+      <section className="py-24 bg-gradient-to-b from-base-200 to-base-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 scroll-animate opacity-0">
-            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
               Expertise
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
               Specialized knowledge across the modern tech landscape
             </p>
           </div>
@@ -562,15 +531,23 @@ export default function Home() {
                 title: "API Development",
                 description: "RESTful and GraphQL APIs with comprehensive documentation"
               },
+              {
+                title: "Vulnerability Management",
+                description: "Identifying, assessing, and remediating security vulnerabilities across applications and infrastructure"
+              },
+              {
+                title: "Infrastructure Engineering",
+                description: "Designing and implementing scalable, reliable infrastructure solutions for modern applications"
+              },
             ].map((skill) => (
               <div
                 key={skill.title}
-                className="p-6 bg-white dark:bg-gray-800 rounded-xl border-2 border-transparent hover:border-purple-500 transition-all duration-300 group"
+                className="p-6 bg-base-100 rounded-xl border-2 border-transparent hover:border-primary transition-all duration-300 group"
               >
-                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3 group-hover:text-purple-600 transition-colors">
+                <h3 className="text-xl font-bold text-base-content mb-3 group-hover:text-primary transition-colors">
                   {skill.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-base-content/70">
                   {skill.description}
                 </p>
               </div>
@@ -580,13 +557,13 @@ export default function Home() {
       </section>
 
       {/* Achievement Badges */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <section className="py-24 bg-gradient-to-b from-base-200 to-base-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 scroll-animate opacity-0">
-            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
               Achievements
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
+            <p className="text-base-content/70 text-lg">
               Competition wins and milestones
             </p>
           </div>
@@ -607,13 +584,13 @@ export default function Home() {
             ].map((badge) => (
               <div
                 key={badge.title}
-                className={`bg-white dark:bg-gray-800 rounded-2xl p-8 text-center hover:scale-105 hover:shadow-2xl transition-all duration-300 ${
-                  badge.highlight ? 'border-2 border-purple-500' : 'border-2 border-transparent'
+                className={`bg-base-100 rounded-2xl p-8 text-center hover:scale-105 hover:shadow-2xl transition-all duration-300 ${
+                  badge.highlight ? 'border-2 border-primary' : 'border-2 border-transparent'
                 }`}
               >
                 <div className="text-6xl mb-4">{badge.icon}</div>
-                <div className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">{badge.title}</div>
-                <div className="text-lg text-gray-600 dark:text-gray-400">{badge.desc}</div>
+                <div className="text-2xl font-bold text-base-content mb-2">{badge.title}</div>
+                <div className="text-lg text-base-content/70">{badge.desc}</div>
               </div>
             ))}
           </div>
@@ -621,13 +598,13 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 bg-gradient-to-b from-purple-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <section id="about" className="py-24 bg-gradient-to-b from-base-200 to-base-100">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/2 scroll-animate opacity-0">
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
-                <div className="relative bg-white dark:bg-gray-800 rounded-2xl p-8 flex items-center justify-center">
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
+                <div className="relative bg-base-100 rounded-2xl p-8 flex items-center justify-center">
                   <div className="relative w-full max-w-sm">
                     <Image
                       src="/labs.png"
@@ -641,10 +618,10 @@ export default function Home() {
               </div>
             </div>
             <div className="md:w-1/2 space-y-6 scroll-animate opacity-0">
-              <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 About VenomLabs
               </h2>
-              <div className="space-y-4 text-gray-900 dark:text-gray-100 text-lg leading-relaxed">
+              <div className="space-y-4 text-base-content text-lg leading-relaxed">
                 <p>
                   At VenomLabs, we engineer digital solutions with precision and bite. We&apos;re a forward-thinking
                   development studio specializing in crafting high-performance software, scalable infrastructure, and
@@ -665,25 +642,25 @@ export default function Home() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-24 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-800 dark:to-pink-800">
+      <section className="py-24 bg-gradient-to-r from-primary to-secondary">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center text-white scroll-animate opacity-0">
+          <div className="max-w-3xl mx-auto text-center text-base-100 scroll-animate opacity-0">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Stay in the Loop
             </h2>
-            <p className="text-lg mb-8 text-purple-100 dark:text-purple-200">
+            <p className="text-lg mb-8 text-base-100/80">
               Get the latest updates on projects, tech insights, and exclusive content
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-full text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-white/50"
+                className="input input-bordered flex-1 rounded-full bg-base-100 text-base-content"
                 required
               />
               <button
                 type="submit"
-                className="px-8 py-4 bg-white dark:bg-gray-800 text-purple-600 dark:text-purple-400 font-semibold rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors whitespace-nowrap"
+                className="btn btn-base-100 rounded-full whitespace-nowrap"
               >
                 Subscribe 🚀
               </button>
@@ -693,13 +670,13 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800">
+      <section id="contact" className="py-24 bg-gradient-to-b from-base-200 to-base-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 scroll-animate opacity-0">
-            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-4">
               Get in Touch
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
               Have a project in mind? Let&apos;s build something amazing together
             </p>
           </div>
@@ -714,7 +691,7 @@ export default function Home() {
                   type="text"
                   name="name"
                   placeholder="Your Name"
-                  className="w-full px-6 py-4 bg-white dark:bg-gray-800 dark:text-gray-200 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
+                  className="input input-bordered w-full rounded-xl"
                   required
                 />
               </div>
@@ -723,7 +700,7 @@ export default function Home() {
                   type="email"
                   name="_replyto"
                   placeholder="Your Email"
-                  className="w-full px-6 py-4 bg-white dark:bg-gray-800 dark:text-gray-200 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
+                  className="input input-bordered w-full rounded-xl"
                   required
                 />
               </div>
@@ -732,13 +709,13 @@ export default function Home() {
                   name="message"
                   placeholder="Your Message"
                   rows={6}
-                  className="w-full px-6 py-4 bg-white dark:bg-gray-800 dark:text-gray-200 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:border-purple-500 focus:outline-none transition-colors resize-none"
+                  className="textarea textarea-bordered w-full rounded-xl resize-none"
                   required
                 ></textarea>
               </div>
               <button
                 type="submit"
-                className="w-full px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-lg rounded-xl shadow-lg hover:shadow-purple-500/50 hover:scale-[1.02] transition-all duration-300"
+                className="btn btn-primary w-full rounded-xl text-lg"
               >
                 Send Message
               </button>
@@ -749,7 +726,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <button
               onClick={() => alert("🐍 You found the secret! VenomLabs appreciates curious minds. Use code VENOM10 for 10% off your first project!")}
-              className="text-xs text-gray-400 hover:text-purple-600 transition-colors"
+              className="text-xs text-base-content/40 hover:text-primary transition-colors"
             >
               .
             </button>
@@ -762,11 +739,11 @@ export default function Home() {
         onClick={() =>
           document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
         }
-        className="fixed bottom-8 right-8 z-40 w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full shadow-2xl hover:shadow-purple-500/50 hover:scale-110 transition-all duration-300 flex items-center justify-center group"
+        className="btn btn-primary fixed bottom-8 right-8 z-40 w-14 h-14 rounded-full shadow-2xl hover:scale-110 transition-all duration-300"
         aria-label="Contact us"
       >
         <svg
-          className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300"
+          className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -781,17 +758,17 @@ export default function Home() {
       </button>
 
       {/* Footer */}
-      <footer className="py-12 bg-gradient-to-r from-gray-900 to-purple-900 dark:from-black dark:to-gray-900 text-white">
+      <footer className="py-12 bg-gradient-to-r from-base-300 to-base-200 text-base-content">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left">
-              <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
                 VenomLabs
               </div>
-              <p className="text-gray-400">
+              <p className="text-base-content/70">
                 &copy; {new Date().getFullYear()} VenomLabs. All rights reserved.
               </p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-base-content/50 mt-2">
                 Built with 💜 using Next.js & TypeScript
               </p>
             </div>
@@ -801,7 +778,7 @@ export default function Home() {
                 href="https://github.com/mikenike360"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all"
+                className="btn btn-ghost btn-circle"
                 aria-label="GitHub"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -812,7 +789,7 @@ export default function Home() {
                 href="https://twitter.com/zkontract"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all"
+                className="btn btn-ghost btn-circle"
                 aria-label="Twitter/X"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -823,7 +800,7 @@ export default function Home() {
                 href="https://www.linkedin.com/in/michaelvenema/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-white/20 hover:scale-110 transition-all"
+                className="btn btn-ghost btn-circle"
                 aria-label="LinkedIn"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -831,7 +808,7 @@ export default function Home() {
                 </svg>
               </a>
             </div>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-base-content/50">
                 🐍 Crafted with Venom
               </div>
             </div>

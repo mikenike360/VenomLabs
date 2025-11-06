@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    darkMode: 'class',
     content: [
       "./src/app/**/*.{js,ts,jsx,tsx}",
       // Include additional paths if you have components elsewhere
@@ -10,21 +11,40 @@ module.exports = {
     plugins: [require("daisyui")],
     daisyui: {
       themes: [
-        // You can list preset themes or your custom themes here:
         "light",
         "dark",
-        {
-          mytheme: {
-            primary: "#a991f7",
-            secondary: "#f6d860",
-            accent: "#37cdbe",
-            neutral: "#3d4451",
-            "base-100": "#ffffff",
-            // ...add additional tokens if needed
-          },
-        },
         "cupcake",
+        "bumblebee",
+        "emerald",
+        "corporate",
+        "synthwave",
+        "retro",
+        "cyberpunk",
+        "valentine",
+        "halloween",
+        "garden",
+        "forest",
+        "aqua",
+        "lofi",
+        "pastel",
+        "fantasy",
+        "wireframe",
+        "black",
+        "luxury",
+        "dracula",
+        "cmyk",
+        "autumn",
+        "business",
+        "acid",
+        "lemonade",
+        "night",
+        "coffee",
+        "winter",
       ],
+      darkTheme: "dark",
+      base: true,
+      styled: true,
+      utils: true,
     },
   };
   
