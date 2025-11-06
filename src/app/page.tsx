@@ -569,7 +569,7 @@ export default function Home() {
               Achievements
             </h2>
             <p className="text-base-content/70 text-lg">
-              Competition wins and milestones
+              Notable achievements and contributions
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto scroll-animate opacity-0">
@@ -584,6 +584,18 @@ export default function Home() {
                 icon: "🥈", 
                 title: "2nd Place", 
                 desc: "ZK Escrow - Aleo Code Sprint 3",
+                highlight: true
+              },
+              { 
+                icon: "🏆", 
+                title: "Finalist", 
+                desc: "WhisperWaffle - Aleo Code Sprint 4",
+                highlight: true
+              },
+              { 
+                icon: "🔒", 
+                title: "9.8 CVE", 
+                desc: "Discovered critical auth bypass (CVE-2019-16028) in Cisco Firepower Management Center",
                 highlight: true
               },
             ].map((badge) => (
