@@ -140,6 +140,10 @@ export default function Home() {
             <ThemeSwitcher />
           </div>
 
+          <div className="md:hidden flex items-center gap-3">
+            <ThemeSwitcher />
+          </div>
+
           {/* Mobile Menu Button */}
           <button
             className="md:hidden z-50"
@@ -188,7 +192,6 @@ export default function Home() {
               {item}
             </button>
           ))}
-          <ThemeSwitcher />
         </div>
       </div>
 
@@ -640,17 +643,19 @@ export default function Home() {
               </h2>
               <div className="space-y-4 text-base-content text-lg leading-relaxed">
                 <p>
-                  At VenomLabs, we engineer digital solutions with precision and bite. We&apos;re a forward-thinking
-                  development studio specializing in crafting high-performance software, scalable infrastructure, and
-                  cutting-edge Web3 applications.
+                  VenomLabs is a development studio dedicated to shipping software that&apos;s as resilient as it is refined.
+                  We architect cloud-native platforms, battle-tested infrastructure, and cutting-edge Web3 experiences for
+                  teams that need reliability at scale.
                 </p>
                 <p>
-                  Our mission is to simplify complex problems through elegant code, innovative design, and bulletproof security.
+                  We blend rigorous engineering with thoughtful design to simplify complex problems. From zero-knowledge research
+                  and smart contracts to frontend systems and API ecosystems, every project is built for performance, maintainability,
+                  and security.
                 </p>
                 <p>
-                  We don&apos;t just build — we experiment, iterate, and push the limits of what&apos;s possible. Whether it&apos;s
-                  decentralized apps, backend systems, or full-stack platforms, VenomLabs delivers code that&apos;s clean,
-                  efficient, and venomously effective.
+                  Beyond delivery, we partner long-term with our clients, auditing, iterating, and evolving systems as needs grow. Whether you&apos;re
+                  launching a new product or hardening an existing stack, VenomLabs brings the strategy, code, and curiosity to make
+                  it exceptional.
                 </p>
               </div>
             </div>
