@@ -450,9 +450,14 @@ export default function Home() {
                   <span className="badge badge-primary">Web Design</span>
                   <span className="badge badge-secondary">In Development</span>
                 </div>
-                <div className="btn btn-disabled btn-sm rounded-full">
+                <a
+                  href="https://whatcom-shine-co.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-sm rounded-full opacity-75"
+                >
                   In Development
-                </div>
+                </a>
               </div>
             </div>
           </div>
