@@ -791,7 +791,7 @@ export default function Home() {
                 </svg>
               </a>
               <a
-                href="https://twitter.com/zkontract"
+                href="https://x.com/venomlabsxyz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-ghost btn-circle"
