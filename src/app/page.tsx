@@ -287,12 +287,12 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Project Card 1 */}
             <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden">
+              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
                 <Image
                   src="/project1.png"
                   alt="Project One"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -322,12 +322,12 @@ export default function Home() {
             
             {/* Project Card 2 */}
             <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden">
+              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
                 <Image
                   src="/project2.png"
                   alt="Project Two"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -357,12 +357,12 @@ export default function Home() {
             
             {/* Project Card 3 */}
             <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
-              <figure className="relative w-full h-56 overflow-hidden">
+              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
                 <Image
                   src="/project3.png"
                   alt="ZK Escrow"
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
                   className="group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -387,6 +387,103 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </a>
+              </div>
+            </div>
+            
+            {/* Project Card 4 */}
+            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                <Image
+                  src="/project4.png"
+                  alt="WhisperWaffle"
+                  layout="fill"
+                  objectFit="contain"
+                  className="group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </figure>
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">WhisperWaffle</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                  A decentralized exchange (DEX) built on the Aleo blockchain, enabling secure and private token swaps with zero-knowledge proofs.
+                </p>
+                <div className="flex gap-2 flex-wrap mb-4">
+                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">DEX</span>
+                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">Aleo</span>
+                </div>
+                <a
+                  href="https://whisper-waffle.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                >
+                  View Project
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            
+            {/* Project Card 5 */}
+            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                <Image
+                  src="/project5.png"
+                  alt="Aleo Quest"
+                  layout="fill"
+                  objectFit="contain"
+                  className="group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </figure>
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">Aleo Quest</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                  An interactive education platform to learn about zero-knowledge concepts. Features an interactive terminal quest for hands-on learning.
+                </p>
+                <div className="flex gap-2 flex-wrap mb-4">
+                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Education</span>
+                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">ZK</span>
+                </div>
+                <a
+                  href="https://aleo-quest.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                >
+                  View Project
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            
+            {/* Project Card 6 */}
+            <div className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-animate opacity-0">
+              <figure className="relative w-full h-56 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                <Image
+                  src="/project6.png"
+                  alt="Whatcom Shine Co"
+                  layout="fill"
+                  objectFit="contain"
+                  className="group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </figure>
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">Whatcom Shine Co</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                  A website for a company providing residential and commercial cleaning services in Whatcom County and surrounding areas.
+                </p>
+                <div className="flex gap-2 flex-wrap mb-4">
+                  <span className="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Web Design</span>
+                  <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm">In Development</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-6 py-2 bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full cursor-not-allowed">
+                  In Development
+                </div>
               </div>
             </div>
           </div>
