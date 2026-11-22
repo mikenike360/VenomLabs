@@ -8,8 +8,15 @@ export default function Tekmor() {
         <div className="grid items-end gap-8 border-t border-bone/15 pt-8 md:grid-cols-[minmax(0,1fr)_auto]">
           <div>
             <p className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-venom">Now</p>
-            <h2 className="mt-3 font-serif text-[clamp(3.25rem,7vw,6rem)] italic leading-none tracking-[-0.045em] text-bone">
-              {tekmor.name}
+            <h2 className="mt-3 font-serif text-[clamp(3.25rem,7vw,6rem)] italic leading-none tracking-[-0.045em]">
+              <a
+                href={tekmor.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-bone transition-colors duration-200 hover:text-venom"
+              >
+                {tekmor.name}
+              </a>
             </h2>
             <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-bone/75">{tekmor.summary}</p>
             <p className="mt-3 font-mono text-xs uppercase tracking-[0.14em] text-bone/45">{tekmor.note}</p>

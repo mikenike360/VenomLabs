@@ -39,8 +39,15 @@ export default function WorkList({ title, projects, className = "" }: WorkListPr
                 <div className="hidden md:block" />
               )}
               <div className="col-span-2 col-start-1 md:col-span-1 md:col-start-3">
-                <h3 className="font-serif text-[1.85rem] leading-none tracking-[-0.03em] text-bone transition-colors duration-200 group-hover:text-venom sm:text-4xl md:text-[2.75rem]">
-                  {project.name}
+                <h3 className="font-serif text-[1.85rem] leading-none tracking-[-0.03em] sm:text-4xl md:text-[2.75rem]">
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-bone transition-colors duration-200 hover:text-venom group-hover:text-venom"
+                  >
+                    {project.name}
+                  </a>
                 </h3>
                 <p className="mt-4 max-w-[50ch] text-base leading-relaxed text-bone/70">{project.summary}</p>
                 {project.note ? (
