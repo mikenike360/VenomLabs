@@ -1,21 +1,23 @@
 export const opening = {
-  label: "Development studio",
-  lead: "VenomLabs builds games and software for the browser, led by",
+  label: "Small studio",
+  lead: "Things for the internet, starting with",
   accent: "Tekmor",
   accentHref: "https://www.tekmor.online/",
-  rest: ", a multiplayer fantasy world.",
-  deck: "The studio also ships three.js scenes, zero-knowledge tools on Aleo, and websites for clients.",
+  rest: ".",
+  deck: "Browser games, three.js scenes, privacy tools on Aleo, and websites when somebody needs one done right.",
 };
 
 export const tekmor = {
   name: "Tekmor",
   href: "https://www.tekmor.online/",
+  eyebrow: "Out front",
   summary:
-    "A shared fantasy world in the browser. Players gather resources, craft gear, fight, trade, and explore together.",
-  note: "In development",
+    "A multiplayer fantasy world that runs in the browser. Gather what you find, craft what you need, fight, trade, and wander the same map with other people.",
+  note: "Still cooking",
+  cta: "Play",
   image: "/tekmor.webp",
   imageAlt: "A forest clearing in Tekmor, with a cottage, deer, a wolf, and a pond.",
-  caption: "A forest in Tekmor.",
+  caption: "A clearing in Tekmor. Cottage, pond, company.",
 };
 
 export type Project = {
@@ -28,40 +30,48 @@ export type Project = {
   imageAlt?: string;
 };
 
+export const scenesTitle = "Scenes";
+export const scenesIntro = "Small three.js rooms you can walk into for a minute.";
+
 export const scenes: Project[] = [
   {
     name: "Christmas Wish",
-    summary: "A family Christmas wishlist built as a three.js scene around a tree.",
+    summary:
+      "A living-room Christmas tree you can orbit. Hang wishes on it. The countdown sits in the corner.",
     note: "Three.js",
     href: "https://christmaswish.xyz/",
-    linkLabel: "Visit",
+    linkLabel: "Open it",
     image: "/christmaswish.png",
     imageAlt: "A Christmas living room scene with a tree and gift tags.",
   },
 ];
 
+export const workTitle = "Also made";
+export const workIntro = "Tools, experiments, and sites that left the desk.";
+
 export const projects: Project[] = [
   {
     name: "zKontract",
-    summary: "A bounty board on Aleo, live on mainnet.",
+    summary: "Post a bounty. Prove the work. Paid on Aleo, live on mainnet.",
     note: "First place, Aleo Code Sprint 2",
     href: "https://zkontract.app",
-    linkLabel: "Visit",
+    linkLabel: "Open",
     image: "/project1.png",
     imageAlt: "Screenshot of the zKontract bounty board.",
   },
   {
     name: "ZK Escrow",
-    summary: "Escrow on Aleo so two parties can hold funds without a middleman.",
+    summary: "Two people park funds on Aleo until both are ready. No middleman in the middle.",
     note: "Second place, Aleo Code Sprint 3",
     href: "https://zkescrow.vercel.app/",
-    linkLabel: "Visit",
+    linkLabel: "Open",
     image: "/project3.png",
     imageAlt: "Screenshot of ZK Escrow.",
   },
   {
     name: "WhisperWaffle",
-    summary: "A private exchange on Aleo.",
+    summary:
+      "A private exchange on Aleo — what you trade stays between the people trading.",
     note: "Finalist, Aleo Code Sprint 4",
     href: "https://github.com/mikenike360/WhisperWaffle",
     linkLabel: "GitHub",
@@ -70,15 +80,15 @@ export const projects: Project[] = [
   },
   {
     name: "Aleo Quest",
-    summary: "A terminal quest that teaches zero-knowledge proofs.",
+    summary: "A terminal quest that teaches zero-knowledge proofs without a lecture.",
     href: "https://aleo-quest.vercel.app/",
-    linkLabel: "Visit",
+    linkLabel: "Play",
     image: "/project5.png",
     imageAlt: "Screenshot of Aleo Quest.",
   },
   {
     name: "Miller's Hill Farm",
-    summary: "A venue website with reservations and a photo gallery.",
+    summary: "Venue site with reservations and a photo gallery that actually shows the place.",
     href: "https://millers-farm-react-website.vercel.app/",
     linkLabel: "Visit",
     image: "/project2.png",
@@ -86,7 +96,7 @@ export const projects: Project[] = [
   },
   {
     name: "Ground Folk",
-    summary: "A website for a hand-drawn cartoon, with episodes, characters, and a shop.",
+    summary: "Site for a hand-drawn cartoon: episodes, characters, and a shop off the couch.",
     href: "https://groundfolk-website.vercel.app/",
     linkLabel: "Visit",
     image: "/groundfolk.png",
@@ -94,7 +104,8 @@ export const projects: Project[] = [
   },
   {
     name: "Sandy Point Lawn Care",
-    summary: "A website for a lawn care business in Sandy Point, with services and pricing.",
+    summary:
+      "Lawn care in Sandy Point — services, pricing, and a clean front door on the web.",
     href: "https://www.sandypointlawncare.com/",
     linkLabel: "Visit",
     image: "/sandypoint.png",
@@ -102,8 +113,8 @@ export const projects: Project[] = [
   },
   {
     name: "Whatcom Shine Co",
-    summary: "A website for a cleaning company in Whatcom County.",
-    note: "In development",
+    summary: "Cleaning company site for Whatcom County. Still getting its shine.",
+    note: "In progress",
     href: "https://github.com/mikenike360/whatcom_shine_co",
     linkLabel: "GitHub",
     image: "/project6.png",
@@ -111,16 +122,28 @@ export const projects: Project[] = [
   },
 ];
 
+export const aboutHeading = "About";
+
 export const about = [
-  "VenomLabs is a development studio specializing in browser games, interactive three.js experiences, and zero-knowledge software on Aleo. The studio also builds websites for clients who need a clear, durable product.",
-  "The current focus is Tekmor, a multiplayer fantasy world that runs entirely in the browser. Alongside that work, VenomLabs designs smaller scenes and tools, and takes on client sites when the project is a strong fit.",
-  "When a product ships, the studio stays involved to maintain and extend it.",
+  "VenomLabs is a small studio that makes things for the internet. Sometimes that is a multiplayer world. Sometimes it is a three.js scene, a privacy tool on Aleo, or a website that needs to be clear and last.",
+  "Right now most of the attention goes to Tekmor — a fantasy world that never leaves the browser. The smaller projects and client sites happen in the gaps, when the fit is right.",
+  "When something ships, we stay with it. Maintenance and the next version are part of the job.",
 ];
 
 export const contact = {
   action: "https://formspree.io/f/mgvazgke",
-  intro: "Interested in working with VenomLabs? Send a note.",
+  heading: "Contact",
+  intro: "A strange idea, a normal website, or something in between. Send it over.",
+  nameLabel: "Name",
+  emailLabel: "Email",
+  messageLabel: "Message",
+  namePlaceholder: "What should we call you?",
+  emailPlaceholder: "Where should we reply?",
+  messagePlaceholder: "What's on your mind?",
+  button: "Send it",
 };
+
+export const footerLine = "Making things for the internet.";
 
 export const social = [
   { label: "GitHub", href: "https://github.com/mikenike360" },

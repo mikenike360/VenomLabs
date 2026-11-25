@@ -3,8 +3,12 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { clone as cloneSkinned } from "three/examples/jsm/utils/SkeletonUtils.js";
 
 const INK = 0x10120e;
+const VENOM = 0xd6ff3e;
+const SCREEN_GLOW = 0xb8ff4a;
+const TERMINAL_URL = "/grove/workstation.glb";
 
 type Placement = {
   url: string;
@@ -12,41 +16,107 @@ type Placement = {
   x: number;
   z: number;
   rot: number;
+  /** Sink into the ground/chair after grounding (for a seated pose). */
+  sink?: number;
+  /** Raise after grounding (put a monitor on a desk, etc.). */
+  lift?: number;
+  skipDim?: boolean;
+  glowScreen?: boolean;
+  /** Measure only mesh geometry — ignores oversized armatures on rigged characters. */
+  meshBounds?: boolean;
 };
 
+/** A 2000s workstation in the open right of the headline. */
 const placements: Placement[] = [
-  { url: "/grove/cottage.glb", height: 1.8, x: -1.5, z: -2.4, rot: 0.35 },
-  { url: "/grove/tree-kenney.glb", height: 2.5, x: -3.8, z: -0.6, rot: 0.4 },
-  { url: "/grove/tree-quaternius.glb", height: 2.9, x: -2.4, z: 0.5, rot: 1.1 },
-  { url: "/grove/tree-kenney.glb", height: 2.1, x: 0.2, z: -1.6, rot: 0.2 },
-  { url: "/grove/tree-quaternius.glb", height: 3.1, x: 2.2, z: -0.2, rot: 0.7 },
-  { url: "/grove/tree-kenney.glb", height: 2.3, x: 4.1, z: 0.6, rot: 2.2 },
-  { url: "/grove/tree-quaternius.glb", height: 2.4, x: -5.1, z: -1.4, rot: 0.9 },
-  { url: "/grove/rock.glb", height: 0.42, x: -0.3, z: 1.5, rot: 0.5 },
-  { url: "/grove/rock.glb", height: 0.3, x: 1.5, z: 1.7, rot: 1.3 },
+  {
+    url: TERMINAL_URL,
+    height: 1.15,
+    x: 2.7,
+    z: 0.2,
+    rot: -0.2,
+    skipDim: true,
+    glowScreen: true,
+  },
 ];
 
-function sitOnGround(object: THREE.Object3D, height: number) {
-  const box = new THREE.Box3().setFromObject(object);
+function meshBoundingBox(object: THREE.Object3D) {
+  object.updateMatrixWorld(true);
+  const box = new THREE.Box3();
+  let found = false;
+  object.traverse((child) => {
+    const mesh = child as THREE.Mesh;
+    if (!mesh.isMesh || !mesh.geometry) return;
+    if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox();
+    if (!mesh.geometry.boundingBox) return;
+    const geoBox = mesh.geometry.boundingBox.clone();
+    geoBox.applyMatrix4(mesh.matrixWorld);
+    if (!found) {
+      box.copy(geoBox);
+      found = true;
+    } else {
+      box.union(geoBox);
+    }
+  });
+  return found ? box : new THREE.Box3().setFromObject(object);
+}
+
+function sitOnGround(
+  object: THREE.Object3D,
+  height: number,
+  sink = 0,
+  lift = 0,
+  meshBounds = false,
+) {
+  const box = meshBounds ? meshBoundingBox(object) : new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
   if (size.y > 0) {
     object.scale.multiplyScalar(height / size.y);
   }
-  const grounded = new THREE.Box3().setFromObject(object);
-  object.position.y -= grounded.min.y;
+  const grounded = meshBounds ? meshBoundingBox(object) : new THREE.Box3().setFromObject(object);
+  object.position.y -= grounded.min.y + sink;
+  object.position.y += lift;
 }
 
-function dimMaterials(object: THREE.Object3D) {
+function dimMaterials(object: THREE.Object3D, amount = 0.7) {
   object.traverse((child) => {
     const mesh = child as THREE.Mesh;
     if (!mesh.isMesh) return;
     const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
     for (const material of materials) {
       const colored = material as THREE.MeshStandardMaterial;
-      if (colored.color) colored.color.multiplyScalar(0.62);
+      if (colored.color) colored.color.multiplyScalar(amount);
       colored.fog = true;
     }
   });
+}
+
+/** The CRT text is M_screen_brightgreen and faces mostly +Z. */
+function lightUpTerminal(object: THREE.Object3D) {
+  let screen: THREE.Mesh | null = null;
+  object.traverse((child) => {
+    const mesh = child as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    for (const material of materials) {
+      if (!(material instanceof THREE.MeshStandardMaterial)) continue;
+      if (material.name !== "M_screen_brightgreen") continue;
+      material.emissive.setHex(VENOM);
+      material.emissiveIntensity = 0.55;
+      material.toneMapped = false;
+      screen = mesh;
+    }
+  });
+
+  object.updateMatrixWorld(true);
+  const light = new THREE.PointLight(SCREEN_GLOW, 0.45, 2.4);
+  if (screen) {
+    const center = new THREE.Box3().setFromObject(screen).getCenter(new THREE.Vector3());
+    const normal = new THREE.Vector3(0, 0.34, 0.94).transformDirection(object.matrixWorld);
+    center.addScaledVector(normal, 0.28);
+    object.worldToLocal(center);
+    light.position.copy(center);
+  }
+  object.add(light);
 }
 
 export default function Grove() {
@@ -75,21 +145,21 @@ export default function Grove() {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(INK, 0.11);
+    scene.fog = new THREE.FogExp2(INK, 0.055);
 
-    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 40);
-    camera.position.set(0, 2.15, 9.2);
+    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
+    camera.position.set(1.6, 1.7, 8.6);
 
-    scene.add(new THREE.AmbientLight(0x8ea090, 0.55));
-    const sun = new THREE.DirectionalLight(0xd7e2cf, 1.15);
-    sun.position.set(-4, 8, 6);
+    scene.add(new THREE.AmbientLight(0x9aa890, 0.72));
+    const sun = new THREE.DirectionalLight(0xd7e2cf, 0.85);
+    sun.position.set(-5, 9, 4);
     scene.add(sun);
-    const windowLight = new THREE.PointLight(0xffb15a, 4, 7);
-    windowLight.position.set(-1.4, 1.2, -2);
-    scene.add(windowLight);
+    const fill = new THREE.DirectionalLight(0x6a7a90, 0.28);
+    fill.position.set(4, 3, 6);
+    scene.add(fill);
 
     const ground = new THREE.Mesh(
-      new THREE.CircleGeometry(14, 40),
+      new THREE.CircleGeometry(18, 48),
       new THREE.MeshStandardMaterial({ color: 0x171d14, roughness: 1 }),
     );
     ground.rotation.x = -Math.PI / 2;
@@ -109,10 +179,10 @@ export default function Grove() {
     };
 
     const render = (time = 0) => {
-      const sway = reduced ? 0 : Math.sin(time * 0.00035) * 0.05;
-      camera.position.x += (pointer.x * 0.55 - camera.position.x) * 0.04;
-      camera.position.y += (2.15 + sway + pointer.y * -0.18 - camera.position.y) * 0.04;
-      camera.lookAt(0, 1.05, 0);
+      const sway = reduced ? 0 : Math.sin(time * 0.00035) * 0.04;
+      camera.position.x += (1.6 + pointer.x * 0.35 - camera.position.x) * 0.04;
+      camera.position.y += (1.7 + sway + pointer.y * -0.12 - camera.position.y) * 0.04;
+      camera.lookAt(2.1, 0.75, 0.2);
       renderer.render(scene, camera);
     };
 
@@ -144,7 +214,6 @@ export default function Grove() {
             loader.load(
               url,
               (gltf) => {
-                dimMaterials(gltf.scene);
                 cache.set(url, gltf.scene);
                 originals.push(gltf.scene);
                 resolve();
@@ -159,11 +228,20 @@ export default function Grove() {
       for (const placement of placements) {
         const source = cache.get(placement.url);
         if (!source) continue;
-        const object = source.clone(true);
-        sitOnGround(object, placement.height);
+        // Skinned Quaternius characters break with Object3D.clone — use SkeletonUtils.
+        const object = cloneSkinned(source);
+        if (!placement.skipDim) dimMaterials(object, 0.55);
+        sitOnGround(
+          object,
+          placement.height,
+          placement.sink ?? 0,
+          placement.lift ?? 0,
+          placement.meshBounds,
+        );
         object.position.x = placement.x;
         object.position.z = placement.z;
         object.rotation.y = placement.rot;
+        if (placement.glowScreen) lightUpTerminal(object);
         scene.add(object);
       }
       render(0);

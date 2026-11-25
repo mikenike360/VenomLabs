@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,14 +12,20 @@ if (!key) {
 
 // Pinned so a later run does not swap the scene.
 const models = [
-  { id: "QN3Ru02ayU", file: "tree-kenney.glb", title: "Tree", creator: "Kenney", licence: "CC0 1.0" },
-  { id: "i4QMw4L64D", file: "tree-quaternius.glb", title: "Tree", creator: "Quaternius", licence: "CC0 1.0" },
-  { id: "YDGLLT0emC", file: "cottage.glb", title: "Cottage", creator: "CreativeTrio", licence: "CC0 1.0" },
-  { id: "RtLRqYjfMs", file: "rock.glb", title: "Rock", creator: "Quaternius", licence: "CC0 1.0" },
+  {
+    id: "P90iu7e4gY",
+    file: "workstation.glb",
+    title: "Computer Generic 2000s",
+    creator: "Charlie",
+    licence: "CC-BY 3.0",
+  },
 ];
 
 const outDir = join(root, "public", "grove");
 mkdirSync(outDir, { recursive: true });
+
+const keep = new Set(models.map((model) => model.file));
+keep.add("credits.json");
 
 for (const model of models) {
   const metaRes = await fetch(`https://api.poly.pizza/v1/model/${model.id}`, {
@@ -40,6 +46,13 @@ for (const model of models) {
   const bytes = Buffer.from(await fileRes.arrayBuffer());
   writeFileSync(join(outDir, model.file), bytes);
   console.log(`${model.file} ${bytes.length} bytes`);
+}
+
+for (const name of readdirSync(outDir)) {
+  if (!keep.has(name)) {
+    unlinkSync(join(outDir, name));
+    console.log(`removed ${name}`);
+  }
 }
 
 writeFileSync(

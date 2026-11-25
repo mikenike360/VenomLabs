@@ -5,7 +5,15 @@ import GroveLoader from "@/components/GroveLoader";
 import Header from "@/components/Header";
 import Tekmor from "@/components/Tekmor";
 import WorkList from "@/components/WorkList";
-import { opening, projects, scenes } from "@/content/site";
+import {
+  opening,
+  projects,
+  scenes,
+  scenesIntro,
+  scenesTitle,
+  workIntro,
+  workTitle,
+} from "@/content/site";
 
 export default function Home() {
   return (
@@ -37,8 +45,18 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-gradient-to-b from-transparent to-ink" />
         </section>
         <Tekmor />
-        <WorkList title="" projects={scenes} className="pb-4 pt-16 md:pt-24" />
-        <WorkList title="Selected work" projects={projects} className="pb-8 pt-14 md:pt-20" />
+        <WorkList
+          title={scenesTitle}
+          intro={scenesIntro}
+          projects={scenes}
+          className="pb-4 pt-16 md:pt-24"
+        />
+        <WorkList
+          title={workTitle}
+          intro={workIntro}
+          projects={projects}
+          className="pb-8 pt-14 md:pt-20"
+        />
         <About />
         <ContactForm />
       </main>

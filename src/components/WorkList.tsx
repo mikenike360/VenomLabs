@@ -3,17 +3,25 @@ import type { Project } from "@/content/site";
 
 type WorkListProps = {
   title: string;
+  intro?: string;
   projects: Project[];
   className?: string;
 };
 
-export default function WorkList({ title, projects, className = "" }: WorkListProps) {
+export default function WorkList({ title, intro, projects, className = "" }: WorkListProps) {
+  const hasHeader = Boolean(title || intro);
+
   return (
     <section className={`mx-auto max-w-page px-5 sm:px-8 ${className}`}>
       {title ? (
         <h2 className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-bone/45">{title}</h2>
       ) : null}
-      <ol className={`${title ? "mt-6" : ""} border-b border-bone/15`}>
+      {intro ? (
+        <p className={`max-w-[40ch] text-base leading-relaxed text-bone/70 ${title ? "mt-3" : ""}`}>
+          {intro}
+        </p>
+      ) : null}
+      <ol className={`${hasHeader ? "mt-6" : ""} border-b border-bone/15`}>
         {projects.map((project, index) => (
           <li key={project.name} className="group border-t border-bone/15">
             <div className="grid grid-cols-[2.25rem_minmax(0,1fr)] items-start gap-x-4 gap-y-5 py-8 md:grid-cols-[2.25rem_7.5rem_minmax(0,1fr)_auto] md:gap-x-8 md:py-10">
