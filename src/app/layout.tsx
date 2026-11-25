@@ -26,7 +26,7 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "VenomLabs",
   description:
-    "VenomLabs makes browser games, three.js scenes, privacy tools on Aleo, and websites — a small studio putting ideas to work on the internet.",
+    "VenomLabs makes browser games, three.js scenes, web3 tools, privacy tools, and websites — a small studio putting ideas to work on the internet.",
 };
 
 export default function RootLayout({

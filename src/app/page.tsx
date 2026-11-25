@@ -23,20 +23,22 @@ export default function Home() {
         <section className="relative min-h-[78vh] overflow-hidden">
           <GroveLoader />
           <div className="relative z-10 mx-auto max-w-page px-5 pb-28 pt-14 sm:px-8 md:pt-24">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-venom">
-              {opening.label}
-            </p>
-            <h1 className="mt-6 max-w-[12em] font-serif text-[clamp(2.55rem,5.6vw,5.5rem)] leading-[0.96] tracking-[-0.035em] text-bone">
-              {opening.lead ? `${opening.lead} ` : null}
-              <a
-                href={opening.accentHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="italic text-venom hover:text-bone"
-              >
-                {opening.accent}
-              </a>
-              {opening.rest}
+            <h1 className="max-w-[12em] font-serif text-[clamp(2.55rem,5.6vw,5.5rem)] leading-[0.96] tracking-[-0.035em] text-bone">
+              {opening.lead}
+              {opening.accent ? (
+                <>
+                  {" "}
+                  <a
+                    href={opening.accentHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="italic text-venom hover:text-bone"
+                  >
+                    {opening.accent}
+                  </a>
+                  {opening.rest}
+                </>
+              ) : null}
             </h1>
             <p className="mt-8 max-w-[36ch] text-base leading-relaxed text-bone/70 md:text-lg">
               {opening.deck}

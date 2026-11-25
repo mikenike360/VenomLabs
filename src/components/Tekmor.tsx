@@ -7,10 +7,7 @@ export default function Tekmor() {
       <div className="mx-auto max-w-page px-5 pt-12 sm:px-8 md:pt-16">
         <div className="grid items-end gap-8 border-t border-bone/15 pt-8 md:grid-cols-[minmax(0,1fr)_auto]">
           <div>
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-venom">
-              {tekmor.eyebrow}
-            </p>
-            <h2 className="mt-3 font-serif text-[clamp(3.25rem,7vw,6rem)] italic leading-none tracking-[-0.045em]">
+            <h2 className="font-serif text-[clamp(3.25rem,7vw,6rem)] italic leading-none tracking-[-0.045em]">
               <a
                 href={tekmor.href}
                 target="_blank"

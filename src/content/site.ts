@@ -1,16 +1,14 @@
 export const opening = {
-  label: "Small studio",
-  lead: "Things for the internet, starting with",
-  accent: "Tekmor",
+  lead: "Things for the internet.",
+  accent: "",
   accentHref: "https://www.tekmor.online/",
-  rest: ".",
-  deck: "Browser games, three.js scenes, privacy tools on Aleo, and websites when somebody needs one done right.",
+  rest: "",
+  deck: "Browser games, three.js scenes, web3 tools, privacy tools, and websites when somebody needs one done right.",
 };
 
 export const tekmor = {
   name: "Tekmor",
   href: "https://www.tekmor.online/",
-  eyebrow: "Out front",
   summary:
     "A multiplayer fantasy world that runs in the browser. Gather what you find, craft what you need, fight, trade, and wander the same map with other people.",
   note: "Still cooking",
@@ -125,7 +123,7 @@ export const projects: Project[] = [
 export const aboutHeading = "About";
 
 export const about = [
-  "VenomLabs is a small studio that makes things for the internet. Sometimes that is a multiplayer world. Sometimes it is a three.js scene, a privacy tool on Aleo, or a website that needs to be clear and last.",
+  "VenomLabs is a small studio that makes things for the internet. Sometimes that is a multiplayer world. Sometimes it is a three.js scene, a web3 tool, a privacy tool, or a website that needs to be clear and last.",
   "Right now most of the attention goes to Tekmor — a fantasy world that never leaves the browser. The smaller projects and client sites happen in the gaps, when the fit is right.",
   "When something ships, we stay with it. Maintenance and the next version are part of the job.",
 ];
