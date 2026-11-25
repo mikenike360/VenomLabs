@@ -146,6 +146,4 @@ export const footerLine = "Making things for the internet.";
 export const social = [
   { label: "GitHub", href: "https://github.com/mikenike360" },
   { label: "X", href: "https://x.com/venomlabsxyz" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/michaelvenema/" },
-  { label: "Discord", href: "https://discord.gg/BXUTyRf5Jb" },
 ];
